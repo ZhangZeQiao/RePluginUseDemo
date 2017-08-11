@@ -7,12 +7,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:onClick="onJumpToImagePlugin"
-        android:text="打开Image插件"
-        android:textSize="18sp"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:onClick="onJumpToImagePlugin"
+            android:text="打开Image插件"
+            android:textSize="18sp"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:onClick="onUpdateImagePlugin"
+            android:text="更新Image插件"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
 
 </LinearLayout>
