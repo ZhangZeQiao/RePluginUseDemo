@@ -2,7 +2,6 @@ package com.xq.repluginusedemo;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -24,21 +23,20 @@ import java.net.URLConnection;
  * @desc 更新插件
  */
 
-public class UpdateService extends IntentService {
+public class DownloadAndUpdateService extends IntentService {
 
-    // 插件下载地址
-    String urlPath = "https://raw.githubusercontent.com/ZhangZeQiao/ImagePluginDemo/7c5866db83b57c455302fac12ea72af30d9a5364/app/src/main/assets/image.apk";
-    // 插件下载后的存放路径
-    String downloadDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-
-    public UpdateService() {
+    public DownloadAndUpdateService() {
         // 实现父类的构造方法，用于命名工作线程，只用于调试。
-        super("UpdateService");
+        super("DownloadAndUpdateService");
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         // Intent是从Activity发过来的，携带识别参数，根据参数不同执行不同的任务
+        // 插件下载地址
+        String urlPath = intent.getStringExtra("urlPath");
+        // 插件下载后的存放路径
+        String downloadDir = intent.getStringExtra("downloadDir");
 
         File file = null;
         try {
@@ -83,7 +81,7 @@ public class UpdateService extends IntentService {
             out.close();
             // 升级安装插件新版本
             RePlugin.install(path);
-            Log.v("xq", "更新完成");
+            Log.v("xq", "下载完成 : " + path);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {

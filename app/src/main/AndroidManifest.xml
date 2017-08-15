@@ -21,7 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <service android:name=".UpdateService"/>
+        <activity android:name=".PluginListActivity"/>
+
+        <service android:name=".DownloadAndUpdateService"/>
     </application>
 
 </manifest>

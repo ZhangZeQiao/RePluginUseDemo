@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,12 +13,12 @@ import com.qihoo360.replugin.RePlugin;
 
 public class MainActivity extends AppCompatActivity {
 
-    private UpdateService mUpdateService;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        verifyStoragePermissions(this);
     }
 
     public void onJumpToImagePlugin(View view) {
@@ -28,9 +29,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onUpdateImagePlugin(View view) {
-        verifyStoragePermissions(this);
-        Intent intent = new Intent(this, UpdateService.class);
+
+        // 插件下载地址
+        String urlPath = "https://raw.githubusercontent.com/ZhangZeQiao/ImagePluginDemo/7c5866db83b57c455302fac12ea72af30d9a5364/app/src/main/assets/image.apk";
+        // 插件下载后的存放路径
+        String downloadDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+
+        Intent intent = new Intent(this, DownloadAndUpdateService.class);
+        intent.putExtra("urlPath", urlPath);
+        intent.putExtra("downloadDir", downloadDir);
         startService(intent);
+    }
+
+    public void onGetPlugin(View view) {
+        Intent intent = new Intent(this, PluginListActivity.class);
+        startActivity(intent);
     }
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
